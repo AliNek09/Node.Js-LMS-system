@@ -1,16 +1,4 @@
-import { IsNotEmpty, IsString, IsArray, IsNumber, ValidateNested } from "class-validator";
-import { Type } from "class-transformer";
-
-class PlaceholderDto
-{
-  @IsNumber()
-  @IsNotEmpty()
-  index: number;
-
-  @IsString()
-  @IsNotEmpty()
-  answer: string;
-}
+import { IsNotEmpty, IsString, IsNumber } from "class-validator";
 
 export class CreateProblemDto
 {
@@ -20,15 +8,7 @@ export class CreateProblemDto
 
   @IsString()
   @IsNotEmpty()
-  title: string;
-
-  @IsArray()
-  @IsNotEmpty()
-  text: string[];
-
-  @ValidateNested({each: true})
-  @Type(() => PlaceholderDto)
-  placeholders: PlaceholderDto[];
+  answer: string;
 
   @IsNumber()
   @IsNotEmpty()

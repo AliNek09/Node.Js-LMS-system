@@ -17,18 +17,10 @@ export class ProblemService
   ) {}
 
   async getOne(id: number): Promise<Problem> {
-    const problem = await this.problemRepository.createQueryBuilder('problem')
-      .leftJoinAndSelect('problem.topic', 'topic')
-      .select([
-        'problem.id',
-        'problem.order',
-        'problem.title',
-        'problem.text',
-        'problem.placeholder',
-        'topic.id as topicId'
-      ])
-      .where('problem.id = :id', {id})
-      .getRawOne();
+    const problem = await this.problemRepository.findOne({
+      where: { id },
+      relations: [ 'topics' ]
+    })
 
     if (!problem) {
       throw new NotFoundException('Problem is not found');
@@ -44,17 +36,7 @@ export class ProblemService
       throw new Error('Topic is not found')
     }
 
-    const arrayPlaceholders = createDto.placeholders.map(({index, answer}) => ({
-      index,
-      answer: String(answer)
-    }));
-
-    const problem = this.problemRepository.create({
-      order: createDto.order,
-      title: createDto.title,
-      text: createDto.text,
-      placeholder: arrayPlaceholders
-    });
+    const problem = this.problemRepository.create(createDto)
 
     return this.problemRepository.save(problem);
 

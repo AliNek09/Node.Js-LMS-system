@@ -11,14 +11,8 @@ export class Problem
   order: number;
 
   @Column()
-  title: string;
+  answer: string;
 
-
-  @Column('text')  // Stores the problem text with placeholders (e.g., 'Solve {1} + {2}')
-  text: string[];
-
-  @Column('jsonb')
-  placeholder: { index: number, answer: string }[];
 
   @ManyToOne(() => Topic, (topic) => topic.problems)
   topic: Topic;
