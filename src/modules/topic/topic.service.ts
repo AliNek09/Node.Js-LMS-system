@@ -56,6 +56,9 @@ export class TopicService
   async delete(id: number): Promise<void>
   {
     const topic = await this.topicRepository.findOne({where: {id}});
+    if(!topic) {
+      throw new NotFoundException('Topic is not found');
+    }
 
     await this.topicRepository.delete(id);
   }
