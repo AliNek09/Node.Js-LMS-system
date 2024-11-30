@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Class } from './class.entity';
 
 @Entity('teachers')
 export class Teacher
@@ -26,4 +27,8 @@ export class Teacher
 
   @Column()
   updated_at: Date;
+
+  @OneToMany(() => Class, (classEntity) => classEntity.teacher)
+  classes: Class[];
+
 }

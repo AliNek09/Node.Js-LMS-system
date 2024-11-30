@@ -3,6 +3,7 @@ import { TopicModule } from "./modules/topic/topic.module";
 import { ProblemModule } from "./modules/problem/problem.module";
 import { TeacherModule } from "./modules/user/teacher/teacher.module";
 import { StudentModule } from "./modules/user/student/student.module";
+import { ClassModule } from './modules/class/class.module';
 
 
 @Module({
@@ -11,6 +12,7 @@ import { StudentModule } from "./modules/user/student/student.module";
     ProblemModule,
     TeacherModule,
     StudentModule,
+    ClassModule,
   ],
   // controllers: [AppController],
   // providers: [AppService],

@@ -60,7 +60,7 @@ export class TopicService
       throw new NotFoundException('Topic is not found');
     }
 
-    await this.topicRepository.delete(id);
+    await this.topicRepository.delete(topic);
   }
 
 }
