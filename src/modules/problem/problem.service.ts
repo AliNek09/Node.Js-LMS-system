@@ -70,6 +70,7 @@ export class ProblemService
 
   async delete(id: number): Promise<void>
   {
+
     const problem = await this.problemRepository.findOne({where: { id }});
     if(!problem) {
       throw new NotFoundException(`Problem with ID ${id} is not found`);
