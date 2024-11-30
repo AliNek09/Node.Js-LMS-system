@@ -57,7 +57,7 @@ export class TopicService
   {
     const topic = await this.topicRepository.findOne({where: {id}});
 
-    await this.topicRepository.delete(id);
+    await this.topicRepository.delete(topic);
   }
 
 }

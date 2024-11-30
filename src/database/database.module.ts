@@ -6,6 +6,7 @@ import { Problem } from "../entities/problem.entity";
 import { Student } from "../entities/student.entity";
 import { Teacher } from "../entities/teacher.entity";
 import * as process from "process";
+import { Class } from '../entities/class.entity';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import * as process from "process";
       username: process.env.DB_USERNAME || 'default',
       password: process.env.DB_PASSWORD || '',
       database: process.env.DB_NAME || 'default',
-      entities: [Topic, Problem, Student, Teacher], // WRITE HERE EVERY ENTITY, EVERRRYYY!!!!!!
+      entities: [Topic, Problem, Student, Teacher, Class], // WRITE HERE EVERY ENTITY, EVERRRYYY!!!!!!
       synchronize: true,
     }),
   ],
