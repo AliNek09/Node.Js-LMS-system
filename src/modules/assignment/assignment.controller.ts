@@ -27,4 +27,5 @@ export class Assignment {
   // @ManyToOne(() => Problem, (problem) => problem.assignments, { nullable: false })
   // @JoinColumn({ name: 'problem_id' })
   // problem: Problem;
+
 }

@@ -19,12 +19,13 @@ export class Class{
   lesson_finish:Date;
 
   @Column()
-  room:number;
+  place:string;
 
   @ManyToOne(() => Teacher, (teacher) => teacher.classes)
   teacher: Teacher;
 
+  @RelationId((classes: Class) => classes.teacher)
   @Column()
-  @RelationId((class_variable: Class) => class_variable.teacher)
   teacherId: number;
+
 }

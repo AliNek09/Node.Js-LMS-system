@@ -16,57 +16,66 @@ export class ClassService {
   ) {
   }
 
-  async getOne(id: number): Promise<Class> {
-    const class_variable = await this.ClassRepository.findOne({
-      where: { id },
-      // select:['id', 'name', 'schedule_days', 'room', 'lesson_start', 'lesson_finish', 'teacherId'],
-    });
+  async getOne(id: number): Promise<Class>
+  {
 
-    if (!class_variable) {
+    const classes = await this.ClassRepository.findOne({ where: { id }});
+
+    if (!classes) {
       throw new NotFoundException('Class does not exist');
     }
 
-    return class_variable;
+    return classes;
   }
 
-  async create(createClassDto: CreateClassDto): Promise<Class> {
-    const teacher = await this.TeacherRepository.findOne({ where: { id: createClassDto.teacherId } });
-    if (!teacher) {
-      throw new NotFoundException('Teacher does not exist');
-    }
-    const class_variable = this.ClassRepository.create(createClassDto);
-    class_variable.teacherId = createClassDto.teacherId;
-    return this.ClassRepository.save(class_variable);
-  }
+  async create(createDto: CreateClassDto): Promise<Class>
+  {
 
-  async update(id: number, updateClassDto: UpdateClassDto): Promise<Class> {
-    const teacher = await this.TeacherRepository.findOne({ where: { id: updateClassDto.teacherId } });
+    const teacher = await this.TeacherRepository.findOne({ where: { id: createDto.teacherId } });
+
     if (!teacher) {
       throw new NotFoundException('Teacher does not exist');
     }
 
-    const class_variable = await this.ClassRepository.findOne({
-      where: { id },
-      // select: ['id', 'name', 'schedule_days', 'room', 'lesson_start', 'lesson_finish'],
-      // relations: ['teacher'],
-    });
+    const classes = this.ClassRepository.create(createDto);
+    classes.teacherId = createDto.teacherId;
 
-    if (!class_variable) {
-      throw new NotFoundException('Class does not exist');
-    }
-    Object.assign(class_variable, updateClassDto);
+    return this.ClassRepository.save(classes);
 
-    return await this.ClassRepository.save(class_variable);
   }
 
-  async delete(id: number): Promise<void> {
-    const class_variable = await this.ClassRepository.findOne({
-      where: { id },
-      // select: ['id', 'name', 'schedule_days', 'room', 'lesson_start', 'lesson_finish'],
-    });
-    if (!class_variable) {
+  async update(id: number, updateDto: UpdateClassDto): Promise<Class>
+  {
+
+    const classes = await this.ClassRepository.findOne({ where: { id }});
+    if (!classes) {
       throw new NotFoundException('Class does not exist');
     }
-    await this.ClassRepository.delete(class_variable);
+
+    if(updateDto.teacherId) {
+      const teacher = await this.TeacherRepository.findOne({ where: { id: updateDto.teacherId } });
+
+      if (!teacher) {
+        throw new NotFoundException('Teacher does not exist');
+      }
+      classes.teacherId = updateDto.teacherId;
+
+    }
+
+    Object.assign(classes, updateDto);
+
+    return await this.ClassRepository.save(classes);
+  }
+
+  async delete(id: number): Promise<void>
+  {
+
+    const classes = await this.ClassRepository.findOne({where: { id }});
+
+    if (!classes) {
+      throw new NotFoundException('Class does not exist');
+    }
+
+    await this.ClassRepository.delete(id);
   }
 }

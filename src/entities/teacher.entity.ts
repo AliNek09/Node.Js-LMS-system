@@ -28,7 +28,7 @@ export class Teacher
   @Column()
   updated_at: Date;
 
-  @OneToMany(() => Class, (classEntity) => classEntity.teacher)
+  @OneToMany(() => Class, (classes) => classes.teacher)
   classes: Class[];
 
 }

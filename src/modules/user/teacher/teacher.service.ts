@@ -52,6 +52,6 @@ export class TeacherService {
       throw new NotFoundException('Teacher does not exist');
     }
 
-    await this.teacherRepository.delete(teacher);
+    await this.teacherRepository.delete(id);
   }
 }

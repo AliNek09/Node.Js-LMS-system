@@ -18,7 +18,13 @@ import { Class } from '../entities/class.entity';
       username: process.env.DB_USERNAME || 'default',
       password: process.env.DB_PASSWORD || '',
       database: process.env.DB_NAME || 'default',
-      entities: [Topic, Problem, Student, Teacher, Class], // WRITE HERE EVERY ENTITY, EVERRRYYY!!!!!!
+      entities: [
+        Topic,
+        Problem,
+        Student,
+        Teacher,
+        Class
+      ], // WRITE HERE EVERY ENTITY, EVERRRYYY!!!!!!
       synchronize: true,
     }),
   ],

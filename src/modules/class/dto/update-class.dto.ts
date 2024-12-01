@@ -7,20 +7,20 @@ export class UpdateClassDto {
   name: string;
 
   @IsString()
-  schedule_days:string;
+  schedule_days: string;
 
   @IsDate()
   @Type(() => Date)
-  lesson_start:Date;
+  lesson_start: Date;
 
   @IsDate()
   @Type(() => Date)
-  lesson_finish:Date;
+  lesson_finish: Date;
+
+  @IsString()
+  place: string
 
   @IsNumber()
-  room:number;
-
-  @IsNumber()
-  teacherId:number;
+  teacherId: number;
 
 }

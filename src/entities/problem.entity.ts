@@ -18,6 +18,7 @@ export class Problem
   topic: Topic;
 
   @RelationId((problem: Problem) => problem.topic)
+  @Column()
   topicId: number;
 
 }

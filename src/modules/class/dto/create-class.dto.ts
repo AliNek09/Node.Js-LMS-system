@@ -8,24 +8,24 @@ export class CreateClassDto {
 
   @IsNotEmpty()
   @IsString()
-  schedule_days:string;
+  schedule_days: string;
 
   @IsNotEmpty()
   @IsDate()
   @Type(() => Date)
-  lesson_start:Date;
+  lesson_start: Date;
 
   @IsNotEmpty()
   @IsDate()
   @Type(() => Date)
-  lesson_finish:Date;
+  lesson_finish: Date;
+
+  @IsNotEmpty()
+  @IsString()
+  place: string;
 
   @IsNotEmpty()
   @IsNumber()
-  room:number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  teacherId:number;
+  teacherId: number;
 
 }

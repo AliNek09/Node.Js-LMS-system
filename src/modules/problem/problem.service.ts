@@ -59,7 +59,7 @@ export class ProblemService
       if(!topic) {
         throw new NotFoundException('Topic is not found');
       }
-      problem.topic = topic;
+      problem.topicId = updateDto.topicId;
 
     }
 
