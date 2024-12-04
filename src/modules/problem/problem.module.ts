@@ -14,6 +14,7 @@ import { DatabaseModule } from "../../database/database.module";
   ],
   controllers: [ProblemController],
   providers: [ProblemService]
+
 })
 
 export class ProblemModule {}

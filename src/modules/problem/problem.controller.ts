@@ -17,7 +17,7 @@ export class ProblemController
   }
 
   @Post('create')
-  @HttpCode(200)
+  @HttpCode(201)
   async create(@Body() createProblem: CreateProblemDto): Promise<Problem>
   {
     return await this.problemService.create(createProblem)

@@ -9,7 +9,10 @@ import { ClassService } from './class.service';
 @Module({
   imports: [
     DatabaseModule,
-    TypeOrmModule.forFeature([Class, Teacher]),
+    TypeOrmModule.forFeature([
+      Class,
+      Teacher
+    ]),
   ],
   controllers: [ClassesController],
   providers: [ClassService],

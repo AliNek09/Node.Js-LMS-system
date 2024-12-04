@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, RelationId } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, RelationId, ManyToMany } from "typeorm";
 import { Topic } from "./topic.entity";
+import { Assignment } from "./assignment.entity";
 
 @Entity('problems')
 export class Problem
@@ -13,12 +14,15 @@ export class Problem
   @Column()
   answer: string;
 
-
+  // Problem belongs to one Topic
   @ManyToOne(() => Topic, (topic) => topic.problems)
   topic: Topic;
 
   @RelationId((problem: Problem) => problem.topic)
   @Column()
-  topicId: number;
+  topicId: number;   // This stores the topic ID for the problem
+
+  @ManyToMany(() => Assignment, (assignment) => assignment.problems)
+  assignments: Assignment[]
 
 }

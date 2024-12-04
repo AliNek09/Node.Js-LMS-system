@@ -21,7 +21,7 @@ export class ProblemService
     const problem = await this.problemRepository.findOne({
       where: { id },
       select: [ 'id', 'order', 'answer', 'topicId' ]
-    })
+    });
 
     if (!problem) {
       throw new NotFoundException('Problem is not found');
@@ -33,13 +33,12 @@ export class ProblemService
   async create(createDto: CreateProblemDto): Promise<Problem>
   {
     const topic = await this.topicRepository.findOne({ where: {id: createDto.topicId}});
-
     if(!topic) {
       throw new NotFoundException('Topic is not found');
     }
 
     const problem = this.problemRepository.create(createDto);
-    problem.topic = topic;
+    problem.topicId = createDto.topicId;
 
     return this.problemRepository.save(problem);
 
@@ -72,6 +71,7 @@ export class ProblemService
   {
 
     const problem = await this.problemRepository.findOne({where: { id }});
+
     if(!problem) {
       throw new NotFoundException(`Problem with ID ${id} is not found`);
     }

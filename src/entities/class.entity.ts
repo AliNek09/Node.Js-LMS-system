@@ -1,5 +1,6 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, RelationId } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, RelationId } from "typeorm";
 import { Teacher } from './teacher.entity';
+import { Assignment } from "./assignment.entity";
 
 @Entity('classes')
 export class Class{
@@ -27,5 +28,8 @@ export class Class{
   @RelationId((classes: Class) => classes.teacher)
   @Column()
   teacherId: number;
+
+  @OneToMany(() => Assignment, (assignment) => assignment.classes)
+  assignments: Assignment[];
 
 }

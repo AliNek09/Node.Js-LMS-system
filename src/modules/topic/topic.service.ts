@@ -48,6 +48,10 @@ export class TopicService
   async update(id: number, updateTopic: UpdateTopicDto): Promise<Topic>
   {
     const topic = await this.topicRepository.findOne({where: {id}});
+
+    if(!topic) {
+      throw new NotFoundException('Topic is not found')
+    }
     Object.assign(topic, updateTopic);
 
     return await this.topicRepository.save(topic);
@@ -60,7 +64,7 @@ export class TopicService
       throw new NotFoundException('Topic is not found');
     }
 
-    await this.topicRepository.delete(topic);
+    await this.topicRepository.delete(id);
   }
 
 }
