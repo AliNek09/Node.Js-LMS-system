@@ -8,7 +8,7 @@ export class Topic
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('decimal')
+  @Column('int')
   topic_number: number;
 
   @Column()

@@ -32,14 +32,16 @@ export class Assignment {
   classId: number;
 
   @ManyToOne(() => Topic, (topic) => topic.assignments)
+  @JoinColumn({ name: 'topicId' }) // Explicitly map topicId to the database column
   topic: Topic;
 
-  @RelationId((assignment: Assignment) => assignment.classes)
-  @Column()
+  @RelationId((assignment: Assignment) => assignment.topic)
+  @Column({ nullable: false }) // Ensure this column is not nullable
   topicId: number;
 
   @ManyToMany(() => Problem, (problem) => problem.assignments)
   @JoinTable({name: 'assignments_problems'}) // Creates a join table for many-to-many relationship
   problems: Problem[];
+
 
 }

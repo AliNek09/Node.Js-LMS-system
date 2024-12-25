@@ -79,8 +79,8 @@ export class AssignmentService
       description: createDto.description,
       deadline: createDto.deadline,
       classId: createDto.classId,
-      topicId: createDto.topicId,
-      problems: problems.map((problem) => ({id: problem.id}))
+      topicId: createDto.topicId, // Ensure this line is included
+      problems: problems.map((problem) => ({ id: problem.id }))
     });
 
     return this.assignmentRepository.save(assignment);

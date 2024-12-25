@@ -17,7 +17,8 @@ export class ProblemService
     private topicRepository: Repository<Topic>
   ) {}
 
-  async getOne(id: number): Promise<Problem> {
+  async getOne(id: number): Promise<Problem>
+  {
     const problem = await this.problemRepository.findOne({
       where: { id },
       select: [ 'id', 'order', 'answer', 'topicId' ]
@@ -28,6 +29,21 @@ export class ProblemService
     }
 
     return problem;
+  }
+
+  async getAll(page: number, limit: number): Promise<{problems: Problem[]}>
+  {
+    const problems = await this.problemRepository.find({
+      select: ['id', 'topicId', 'order'],
+      order: {
+        topicId: 'ASC',
+        order: 'ASC'
+      },
+      skip: (page - 1) * limit,
+      take: limit
+    });
+
+    return { problems };
   }
 
   async create(createDto: CreateProblemDto): Promise<Problem>

@@ -13,10 +13,10 @@ export class Class{
   @Column()
   schedule_days:string;
 
-  @Column()
+  @Column('timestamp')
   lesson_start:Date;
 
-  @Column()
+  @Column('timestamp')
   lesson_finish:Date;
 
   @Column()

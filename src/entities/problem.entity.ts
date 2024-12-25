@@ -8,7 +8,7 @@ export class Problem
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('decimal')
+  @Column('int')
   order: number;
 
   @Column()

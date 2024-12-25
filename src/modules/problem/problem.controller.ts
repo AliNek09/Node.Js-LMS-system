@@ -1,4 +1,4 @@
-import { Controller, HttpCode, Get, Post, Body, Param} from "@nestjs/common";
+import { Controller, HttpCode, Get, Post, Body, Param, Query } from "@nestjs/common";
 import { ProblemService } from "./problem.service";
 import { Problem } from "../../entities/problem.entity";
 import { CreateProblemDto } from "./dto/create-problem.dto";
@@ -14,6 +14,16 @@ export class ProblemController
   async getOne(@Param('id') id: number): Promise<Problem>
   {
     return await this.problemService.getOne(id);
+  }
+
+  @Get('getAll')
+  @HttpCode(200)
+  async getAll(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 5,
+    ): Promise<{problems: Problem[] }>
+  {
+    return await this.problemService.getAll(page, limit);
   }
 
   @Post('create')
