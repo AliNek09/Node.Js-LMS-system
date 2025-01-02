@@ -5,6 +5,7 @@ import { TeacherModule } from "./modules/user/teacher/teacher.module";
 import { StudentModule } from "./modules/user/student/student.module";
 import { ClassModule } from './modules/class/class.module';
 import { AssignmentModule } from "./modules/assignment/assignment.module";
+import { ClassStudentsModule } from "./modules/class-students/class-students.module";
 
 
 @Module({
@@ -14,7 +15,8 @@ import { AssignmentModule } from "./modules/assignment/assignment.module";
     TeacherModule,
     StudentModule,
     ClassModule,
-    AssignmentModule
+    AssignmentModule,
+    ClassStudentsModule
   ],
   // controllers: [AppController],
   // providers: [AppService],

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, RelationId } from "typeorm";
+import { Class } from "./class.entity";
 
 @Entity('students')
 export class Student {
@@ -17,7 +18,7 @@ export class Student {
   @Column()
   password: string;
 
-  @Column({default: ""}) // for dev
+  @Column({nullable: true})
   remember_token: string;
 
   @Column()
@@ -25,4 +26,11 @@ export class Student {
 
   @Column()
   updated_at: Date;
+
+  @ManyToOne(() => Class, (classes) => classes.students, { nullable: true , onDelete: 'CASCADE'})
+  class: Class;
+
+  @Column({ nullable: true })
+  classId: number;
+
 }

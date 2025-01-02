@@ -19,7 +19,7 @@ export class Teacher
   @Column()
   password: string;
 
-  @Column({default: ""}) // for dev
+  @Column({nullable: true}) // for dev
   remember_token: string;
 
   @Column()

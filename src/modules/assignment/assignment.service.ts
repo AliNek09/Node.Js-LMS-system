@@ -9,7 +9,7 @@ import { Topic } from "../../entities/topic.entity";
 import { CreateAssignmentDto } from "./dto/create-assignment.dto";
 import { UpdateAssignmentDto } from "./dto/update-assignment.dto";
 import { GetOneAssignmentDto } from "./dto/get-one-assignment.dto";
-import { RepositoryUtils } from "../../utilities/find-or-fail/findOrFail";
+import { RepositoryUtils } from "../../utilities/repository-utils/findOrFail";
 
 
 @Injectable()
