@@ -62,7 +62,7 @@ export class ProblemService
 
   }
 
-  async update(id: number, updateDto: UpdateProblemDto): Promise<Problem>
+  async update(id: number, updateDto: UpdateProblemDto): Promise<ShortResponse>
   {
     const problem = await RepositoryUtils.findOrFail(
       this.problemRepository,
@@ -82,7 +82,12 @@ export class ProblemService
 
     Object.assign(problem, updateDto);
 
-    return this.problemRepository.save(problem);
+    await this.problemRepository.save(problem);
+
+    return {
+      status: 'success',
+      message: 'Problem has been deleted successfully',
+    };
   }
 
   async delete(id: number): Promise<ShortResponse>

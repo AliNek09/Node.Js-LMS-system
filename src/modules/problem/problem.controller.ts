@@ -38,7 +38,7 @@ export class ProblemController
   async update(
     @Param('id') id: number,
     @Body() updateProblem: UpdateProblemDto,
-    ): Promise<Problem>
+    ): Promise<ShortResponse>
   {
     return await this.problemService.update(id, updateProblem);
   }
