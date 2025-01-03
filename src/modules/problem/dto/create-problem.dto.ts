@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsNumber } from "class-validator";
+import { IsNotEmpty, IsString, IsNumber, IsJSON } from "class-validator";
 
 export class CreateProblemDto
 {
@@ -7,9 +7,9 @@ export class CreateProblemDto
   @IsNotEmpty()
   order: number;
 
-  @IsString()
+  @IsJSON()
   @IsNotEmpty()
-  answer: string;
+  answer: any;  // Refactored to validate JSON format
 
   @IsNumber()
   @IsNotEmpty()

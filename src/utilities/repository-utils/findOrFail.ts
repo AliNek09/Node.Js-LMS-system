@@ -26,23 +26,25 @@ export class RepositoryUtils
 
   }
 
-  static async findByNameOrFail<T>(
-    repository: Repository<T>,
-    criteria: Partial<T>,
-    errorMessage: string,
-    relations?: string[]
-  ): Promise<T>
-  {
-    const entity = await repository.findOne({
-      where: criteria as unknown as FindOptionsWhere<T>,
-      ...(relations?.length ? { relations } : {}),
-    });
+  // static async findByNameOrFail<T>(
+  //   repository: Repository<T>,
+  //   criteria: Partial<T>,
+  //   errorMessage: string,
+  //   relations?: string[]
+  // ): Promise<T>
+  // {
+  //   const entity = await repository.findOne({
+  //     where: criteria as unknown as FindOptionsWhere<T>,
+  //     ...(relations?.length ? { relations } : {}),
+  //   });
+  //
+  //   if (!entity) {
+  //     throw new NotFoundException(errorMessage);
+  //   }
+  //
+  //   return entity;
+  //
+  // }
 
-    if (!entity) {
-      throw new NotFoundException(errorMessage);
-    }
-
-    return entity;
-
-  }
+  // CURRENTLY NOT USABLE FUNCTION
 }

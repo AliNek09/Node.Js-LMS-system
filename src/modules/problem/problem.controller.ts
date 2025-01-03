@@ -45,7 +45,7 @@ export class ProblemController
 
   @Post('delete/:id')
   @HttpCode(202)
-  async delete(@Param('id') id: number): Promise<void>
+  async delete(@Param('id') id: number): Promise<ShortResponse>
   {
     return this.problemService.delete(id);
   }

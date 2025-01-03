@@ -151,7 +151,7 @@ export class AssignmentService
 
     return {
       status: 'success',
-      message: 'Assignment deleted successfully',
+      message: 'Assignment has been deleted successfully',
     };
   }
 

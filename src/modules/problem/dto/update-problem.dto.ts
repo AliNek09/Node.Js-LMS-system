@@ -1,4 +1,4 @@
-import { IsString, IsNumber } from "class-validator";
+import { IsString, IsNumber, IsJSON } from "class-validator";
 
 export class UpdateProblemDto
 {
@@ -6,8 +6,8 @@ export class UpdateProblemDto
   @IsNumber()
   order: number;
 
-  @IsString()
-  answer: string;
+  @IsJSON()
+  answer: any; // Refactored to validate JSON format
 
   @IsNumber()
   topicId: number;

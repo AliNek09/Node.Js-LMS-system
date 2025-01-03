@@ -5,6 +5,7 @@ import { Problem } from "../../entities/problem.entity";
 import { Topic } from "../../entities/topic.entity";
 import { CreateProblemDto } from "./dto/create-problem.dto";
 import { UpdateProblemDto } from "./dto/update-problem.dto";
+import { RepositoryUtils } from "../../utilities/repository-utils/findOrFail";
 
 @Injectable()
 export class ProblemService
@@ -48,10 +49,11 @@ export class ProblemService
 
   async create(createDto: CreateProblemDto): Promise<Problem>
   {
-    const topic = await this.topicRepository.findOne({ where: {id: createDto.topicId}});
-    if(!topic) {
-      throw new NotFoundException('Topic is not found');
-    }
+    const topic = await RepositoryUtils.findOrFail(
+      this.topicRepository,
+      createDto.topicId,
+      'Topic is not found'
+    );
 
     const problem = this.problemRepository.create(createDto);
     problem.topicId = createDto.topicId;
@@ -62,20 +64,20 @@ export class ProblemService
 
   async update(id: number, updateDto: UpdateProblemDto): Promise<Problem>
   {
+    const problem = await RepositoryUtils.findOrFail(
+      this.problemRepository,
+      id,
+      `Problem with ID ${id} is not found`
+    );
 
-    const problem = await this.problemRepository.findOne({where: { id }});
-    if(!problem) {
-      throw new NotFoundException(`Problem with ID ${id} is not found`);
-    }
+    if(updateDto.topicId){
+      await RepositoryUtils.findOrFail(
+        this.topicRepository,
+        updateDto.topicId,
+        'Topic is not found'
+      );
 
-    if(updateDto.topicId) {
-      const topic = await this.topicRepository.findOne({where: {id: updateDto.topicId}});
-
-      if(!topic) {
-        throw new NotFoundException('Topic is not found');
-      }
       problem.topicId = updateDto.topicId;
-
     }
 
     Object.assign(problem, updateDto);
@@ -83,7 +85,7 @@ export class ProblemService
     return this.problemRepository.save(problem);
   }
 
-  async delete(id: number): Promise<void>
+  async delete(id: number): Promise<ShortResponse>
   {
 
     const problem = await this.problemRepository.findOne({where: { id }});
@@ -93,6 +95,11 @@ export class ProblemService
     }
 
     await this.problemRepository.delete(id)
+
+    return {
+      status: 'success',
+      message: 'Problem has been deleted successfully',
+    };
   }
 
 }

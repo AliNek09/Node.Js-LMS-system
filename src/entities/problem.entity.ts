@@ -11,8 +11,8 @@ export class Problem
   @Column('int')
   order: number;
 
-  @Column()
-  answer: string;
+  @Column('jsonb') // Refactored to jsonb type
+  answer: any;
 
   // Problem belongs to one Topic
   @ManyToOne(() => Topic, (topic) => topic.problems)
