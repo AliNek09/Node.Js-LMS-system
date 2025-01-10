@@ -6,6 +6,7 @@ import { Topic } from "../../entities/topic.entity";
 import { CreateProblemDto } from "./dto/create-problem.dto";
 import { UpdateProblemDto } from "./dto/update-problem.dto";
 import { RepositoryUtils } from "../../utilities/repository-utils/findOrFail";
+import { AppException } from "../../utilities/exceptions/exception";
 
 @Injectable()
 export class ProblemService
@@ -54,6 +55,10 @@ export class ProblemService
       createDto.topicId,
       'Topic is not found'
     );
+
+    if (!this.isValidProblemAnswer(createDto.answer)) {
+      throw new AppException('Invalid answer format');
+    }
 
     const problem = this.problemRepository.create(createDto);
     problem.topicId = createDto.topicId;
@@ -104,6 +109,33 @@ export class ProblemService
     return {
       status: 'success',
       message: 'Problem has been deleted successfully',
+    };
+  }
+
+
+  private isValidProblemAnswer(answer: any): boolean {
+    if (!answer || !Array.isArray(answer.fields)) {
+      return false;
+    }
+
+    return answer.fields.every(
+      (field) =>
+        typeof field.index === 'number' &&
+        (typeof field.value === 'string' || typeof field.value === 'number')
+    );
+  }
+
+  private transformProblem(problem: Problem): any {
+    return {
+      id: problem.id,
+      order: problem.order,
+      topicId: problem.topicId,
+      answer: {
+        fields: problem.answer.fields.map(field => ({
+          index: field.index,
+          value: 'Student Input' // Placeholder to hide the correct answer
+        }))
+      }
     };
   }
 

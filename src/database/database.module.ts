@@ -8,6 +8,7 @@ import { Student } from "../entities/student.entity";
 import { Teacher } from "../entities/teacher.entity";
 import { Class } from '../entities/class.entity';
 import { Assignment } from "../entities/assignment.entity";
+import { Submission } from "../entities/submission.entity";
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { Assignment } from "../entities/assignment.entity";
         Student,
         Teacher,
         Class,
-        Assignment
+        Assignment,
+        Submission
       ], // WRITE HERE EVERY ENTITY, EVERRRYYY!!!!!!
       synchronize: true,
     }),

@@ -6,11 +6,12 @@ import {
   RelationId,
   ManyToMany,
   JoinTable,
-  JoinColumn
+  JoinColumn, OneToMany
 } from "typeorm";
 import { Class } from './class.entity';  // Make sure to import the Class entity
 import { Topic } from './topic.entity';  // Make sure to import the Topic entity
-import { Problem } from './problem.entity';  // Make sure to import the Problem entity
+import { Problem } from './problem.entity';
+import { Submission } from "./submission.entity";  // Make sure to import the Problem entity
 
 @Entity('assignments')
 export class Assignment {
@@ -43,5 +44,6 @@ export class Assignment {
   @JoinTable({name: 'assignments_problems'}) // Creates a join table for many-to-many relationship
   problems: Problem[];
 
-
+  @OneToMany(() => Submission, (submissions) => submissions.assignment)
+  submissions: Submission[];
 }

@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Class } from './class.entity';
 
 @Entity('teachers')
@@ -22,10 +22,10 @@ export class Teacher
   @Column({nullable: true}) // for dev
   remember_token: string;
 
-  @Column()
+  @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
   created_at: Date;
 
-  @Column()
+  @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
   updated_at: Date;
 
   @OneToMany(() => Class, (classes) => classes.teacher)

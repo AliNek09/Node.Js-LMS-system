@@ -1,5 +1,14 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, RelationId } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany
+} from "typeorm";
 import { Class } from "./class.entity";
+import { Submission } from "./submission.entity";
 
 @Entity('students')
 export class Student {
@@ -21,10 +30,10 @@ export class Student {
   @Column({nullable: true})
   remember_token: string;
 
-  @Column()
+  @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
   created_at: Date;
 
-  @Column()
+  @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
   updated_at: Date;
 
   @ManyToOne(() => Class, (classes) => classes.students, { nullable: true , onDelete: 'CASCADE'})
@@ -33,4 +42,6 @@ export class Student {
   @Column({ nullable: true })
   classId: number;
 
+  @OneToMany(() => Submission, (submission) => submission.students)
+  submission: Submission[];
 }
