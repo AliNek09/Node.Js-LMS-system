@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { SubmissionService } from "./submission.service";
 import { CreateSubmissionDto } from "./dto/create-submission.dto";
 import { UpdateSubmissionDto } from "./dto/update-submission.dto";
+import { Submission } from '../../entities/submission.entity';
 
 @Controller('submissions')
 export class SubmissionController
@@ -34,4 +35,17 @@ export class SubmissionController
       assignmentId: +assignmentId,
     });
   }
+
+  @Get('student/:studentsId')
+  getOneStudentSubmissions(@Param('studentsId') studentsId: number)
+  {
+    return this.submissionService.getOneStudentSubmissions(studentsId);
+  }
+
+  @Get('assignment/:assignmentId')
+  getSubmissionsForOneAssignment(@Param('assignmentId') assignmentId: number)
+  {
+    return this.submissionService.getSubmissionsForOneAssignment(assignmentId);
+  }
+
 }

@@ -9,6 +9,8 @@ import { CreateSubmissionDto } from "./dto/create-submission.dto";
 import { UpdateSubmissionDto } from "./dto/update-submission.dto";
 import { RepositoryUtils } from "../../utilities/repository-utils/findOrFail";
 import { MathExpression } from "../../utilities/calculations/math-expression";
+import { GetOneStudentSubmissions } from './dto/get-one-student-submissions.dto';
+import { GetSubmissionsForOneAssignment } from './dto/get-submissions-for-one-assignment.dto';
 
 @Injectable()
 export class SubmissionService
@@ -52,7 +54,7 @@ export class SubmissionService
     // Create submission with transformed problems for response
     const submission = this.submissionRepository.create({
       answer: submittedAnswers,
-      score: Math.round(score * 100) / 100,
+      score: Math.round(score),
       assignmentId,
       studentsId,
     });
@@ -98,7 +100,7 @@ export class SubmissionService
     const score = MathExpression.calculateScore(updatedAnswers, problems)
 
     submission.answer = updatedAnswers;
-    submission.score = Math.round(score * 100) / 100;
+    submission.score = Math.round(score);
 
     await this.submissionRepository.save(submission);
 
@@ -108,6 +110,38 @@ export class SubmissionService
       assignmentId: submission.assignment.id,
       studentsId: submission.studentsId,
     }
+  }
+
+  async getOneStudentSubmissions(studentId: number)
+  {
+    const students = await RepositoryUtils.findOrFail(
+      this.studentRepository,
+      studentId,
+      'Student is not found'
+    );
+
+    const submissions = await this.submissionRepository.find({
+      where: {studentsId: students.id},
+      select: ['id', 'score', 'assignmentId', 'date'],
+    });
+
+    return new GetOneStudentSubmissions(students.id, submissions);
+  }
+
+  async getSubmissionsForOneAssignment(assignmentId: number)
+  {
+    const assignments = await RepositoryUtils.findOrFail(
+      this.assignmentRepository,
+      assignmentId,
+      'Assignment is not found'
+    );
+
+    const submissions = await this.submissionRepository.find({
+      where: {assignmentId: assignments.id},
+      select: ['id', 'score', 'studentsId', 'date'],
+    });
+
+    return new GetSubmissionsForOneAssignment(assignments.id, submissions);
   }
 
 }
