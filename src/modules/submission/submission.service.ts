@@ -11,6 +11,7 @@ import { RepositoryUtils } from "../../utilities/repository-utils/findOrFail";
 import { MathExpression } from "../../utilities/calculations/math-expression";
 import { GetOneStudentSubmissions } from './dto/get-one-student-submissions.dto';
 import { GetSubmissionsForOneAssignment } from './dto/get-submissions-for-one-assignment.dto';
+import { AppException } from '../../utilities/exceptions/exception';
 
 @Injectable()
 export class SubmissionService
@@ -59,6 +60,15 @@ export class SubmissionService
       studentsId,
     });
 
+    const submissions = await this.submissionRepository.find({
+      select: ['id', 'assignmentId', 'studentsId'],
+    })
+
+    // Check whether submission created or not
+    if(submissions.some(s => s.assignmentId == submission.assignmentId && s.studentsId == submission.studentsId)){
+      throw new AppException('Submission is already created. Update it');
+    }
+
     const savedSubmission = await this.submissionRepository.save(submission);
 
     return {
@@ -87,6 +97,10 @@ export class SubmissionService
       'Assignment is not found',
       ['problems']
     );
+
+    if (submission.assignmentId != assignmentId){
+      throw new AppException('This submission is not belong to that assignment');
+    }
 
     await RepositoryUtils.findOrFail(
       this.studentRepository,

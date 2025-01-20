@@ -1,4 +1,5 @@
 import { Problem } from "../../entities/problem.entity";
+import { AppException } from '../exceptions/exception';
 
 export class MathExpression
 {
@@ -59,7 +60,9 @@ export class MathExpression
       // Find the corresponding problem from original problems
       const problem = problems.find((p) => p.id === submittedAnswer.problemId);
 
-      if (!problem) continue;
+      if (!problem) {
+        throw new AppException('Submission has invalid problemId')
+      }
 
       const correctAnswerFields = problem.answer.fields;
 

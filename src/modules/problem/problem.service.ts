@@ -60,8 +60,16 @@ export class ProblemService
       throw new AppException('Invalid answer format');
     }
 
+    const problems = await this.problemRepository.find({
+      select: ['id', 'topicId', 'order'],
+    });
+
     const problem = this.problemRepository.create(createDto);
     problem.topicId = createDto.topicId;
+
+    if (problems.some(i => i.topicId === problem.topicId && i.order === problem.order)) {
+      throw new AppException('Invalid topicId or order');
+    }
 
     return this.problemRepository.save(problem);
 
