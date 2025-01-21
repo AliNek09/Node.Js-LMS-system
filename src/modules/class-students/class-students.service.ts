@@ -84,6 +84,10 @@ export class ClassStudentsService
       );
     }
 
+    if (student.classId !== classes.id){
+      throw new AppException('Student belongs to other class.');
+    }
+
     student.classId = null;
     await this.studentRepository.save(student);
 
