@@ -1,37 +1,10 @@
-import { Problem } from "../../entities/problem.entity";
+import { Problem } from '../../entities/problem.entity';
 import { AppException } from '../exceptions/exception';
+import {create, all} from 'mathjs';
+const math = create(all, {});
 
 export class MathExpression
 {
-  static normalizeValue(value: any): string
-  {
-    return String(value)
-      .trim()
-      .toLowerCase()
-      .replace(/\s+/g, '') // Remove all whitespace
-      .replace(/[^\w+\-*/()=]/g, ''); // Keep only alphanumeric and basic math symbols
-  }
-
-  static isMathematicalExpression(value: string): boolean
-  {
-    return /[-+*/()=a-z0-9]/.test(value);
-  }
-
-  static compareMathExpressions(expr1: string, expr2: string): boolean
-  {
-    // Basic algebraic normalization
-    const normalize = (expr: string): string => {
-      return expr
-        .replace(/\s+/g, '')
-        .replace(/([a-z])\+/g, '$1+') // Standardize variable placement
-        .replace(/\+([a-z])/g, '+$1')
-        .split('+')
-        .sort()
-        .join('+');
-    };
-
-    return normalize(expr1) === normalize(expr2);
-  }
 
   static compareAnswers(correctValue: any, submittedValue: any): boolean
   {
@@ -39,16 +12,8 @@ export class MathExpression
     if (correctValue == null || submittedValue == null) {
       return false;
     }
-    const normalizedCorrect = this.normalizeValue(correctValue);
-    const normalizedSubmitted = this.normalizeValue(submittedValue);
 
-    // Special case for mathematical expressions
-    if (this.isMathematicalExpression(normalizedCorrect)) {
-      return this.compareMathExpressions(normalizedCorrect, normalizedSubmitted);
-    }
-
-    // Direct comparison for everything else
-    return normalizedCorrect === normalizedSubmitted;
+    return math.evaluate(`${submittedValue} == ${correctValue}`);
   }
 
   static calculateScore(submittedAnswers: any[], problems: Problem[]): number {
