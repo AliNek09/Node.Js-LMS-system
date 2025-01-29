@@ -126,7 +126,7 @@ export class SubmissionService
     }
   }
 
-  async getOneStudentSubmissions(studentId: number)
+  async getOneStudentSubmissions(studentId: number): Promise<GetOneStudentSubmissions>
   {
     const students = await RepositoryUtils.findOrFail(
       this.studentRepository,
@@ -142,7 +142,7 @@ export class SubmissionService
     return new GetOneStudentSubmissions(students.id, submissions);
   }
 
-  async getSubmissionsForOneAssignment(assignmentId: number)
+  async getSubmissionsForOneAssignment(assignmentId: number): Promise<GetSubmissionsForOneAssignment>
   {
     const assignments = await RepositoryUtils.findOrFail(
       this.assignmentRepository,
