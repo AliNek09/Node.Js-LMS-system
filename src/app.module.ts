@@ -7,6 +7,7 @@ import { ClassModule } from './modules/class/class.module';
 import { AssignmentModule } from "./modules/assignment/assignment.module";
 import { ClassStudentsModule } from "./modules/class-students/class-students.module";
 import { SubmissionModule } from "./modules/submission/submission.module";
+import { PerformanceModule } from "./modules/performance/performance.module";
 
 
 @Module({
@@ -18,7 +19,8 @@ import { SubmissionModule } from "./modules/submission/submission.module";
     ClassModule,
     AssignmentModule,
     ClassStudentsModule,
-    SubmissionModule
+    SubmissionModule,
+    PerformanceModule
   ],
   // controllers: [AppController],
   // providers: [AppService],
